@@ -7,9 +7,9 @@ from aiogram.utils.helper import Helper, HelperMode, ListItem
 from aiogram.dispatcher.filters.state import State, StatesGroup
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from aiogram.types import ReplyKeyboardRemove, ReplyKeyboardMarkup, KeyboardButton, InlineKeyboardMarkup, InlineKeyboardButton
-from tiktok import getCookie, getDownloadUrl, getDownloadID, getStatus # @slivmenss
+from tiktok import getCookie, getDownloadUrl, getDownloadID, getStatus #@tikvidload_bot
 import urllib.request
-TOKEN = 'ТОКЕН БОТА' # @slivmenss
+TOKEN = 'ТОКЕН БОТА' # @tikvidload_bot
 bot = Bot(token=TOKEN)
 dp = Dispatcher(bot, storage=MemoryStorage())
  
@@ -25,11 +25,11 @@ if not os.path.exists('videos'):
     os.makedirs('videos')
 @dp.message_handler(commands=['start'])
 async def start_command(message: types.Message):
-    await bot.send_message(chat_id=message.chat.id, text=' Привет, я помогу тебе скачать видео с TikTok. \n/help - инструкция как скачать видео') # @slivmenss
+    await bot.send_message(chat_id=message.chat.id, text=' Привет, я помогу тебе скачать видео с TikTok. \n/help - инструкция как скачать видео') # @tikvidload_bot
  
 @dp.message_handler(commands=['help'])
 async def help_command(message: types.Message):
-    await bot.send_message(chat_id=message.chat.id, text='Скопируй ссылку на видео TikTok и отправь её мне:') # @slivmenss
+    await bot.send_message(chat_id=message.chat.id, text='Скопируй ссылку на видео TikTok и отправь её мне:') # @tikvidload_bot
  
 @dp.message_handler(content_types=['text'])
 async def text(message: types.Message):
@@ -59,7 +59,7 @@ async def text(message: types.Message):
             data=None,
             headers={
                 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36'
-            } # @slivmenss
+            } # @tikvidload_bot
                     )
         url_v = urllib.request.urlopen(req).geturl()
         if url_v == 'https://www.tiktok.com/':
@@ -69,17 +69,17 @@ async def text(message: types.Message):
             await bot.send_message(chat_id=message.chat.id, text='Скачиваю видео\nЖди⚡️')
             url = getDownloadUrl(url_v, cookie)
             video_id = getDownloadID(url_v, cookie)
-            download_video(url, video_id) # @slivmenss
+            download_video(url, video_id) # @tikvidload_bot
             path = f'./videos/video{video_id}.mp4'
             with open(f'./videos/video{video_id}.mp4', 'rb') as file:
                 await bot.send_video(
                     chat_id=message.chat.id,
                     video=file,
                     caption='Держи видео🚀'
-                    ) # @slivmenss
+                    ) # @tikvidload_bot
             os.remove(path)
     else:
         await bot.send_message(chat_id=message.chat.id, text='Я тебя не понял, отправь мне ссылку на видео TikTok.')
 if __name__ == "__main__":
-    # Запускаем бота и подписываемся на самый пиздатый канал @slivmenss
+    # Запускаем бота и подписываемся на самый пиздатый канал @tikvidload_bot
     executor.start_polling(dp, skip_updates=True)
