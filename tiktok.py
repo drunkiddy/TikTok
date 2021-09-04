@@ -3,7 +3,7 @@ import urllib.parse
 import re
 import json
 import argparse
- # @slivmenss
+ # @tikvidload_bot
 def getCookie():
     conn = http.client.HTTPSConnection("dltik.com")
     payload = ''  
@@ -36,7 +36,7 @@ def getDownloadUrl(url, cookie):
 def getDownloadID(url, cookie):
     conn = http.client.HTTPSConnection("dltik.com")
     cookies = cookie[0].split(';')[0].split('=')
-    payload = 'm=getlink&url=' + urllib.parse.quote(url, safe='') + '&__RequestVerificationToken=' + urllib.parse.quote(cookie[1], safe='')  # @slivmenss
+    payload = 'm=getlink&url=' + urllib.parse.quote(url, safe='') + '&__RequestVerificationToken=' + urllib.parse.quote(cookie[1], safe='')  # @tikvidload_bot
     headers = {
         'Cookie': cookies[0] + '=' + cookies[1] + ';',
         'content-type': 'application/x-www-form-urlencoded'
@@ -44,7 +44,7 @@ def getDownloadID(url, cookie):
     conn.request("POST", "/?hl=en", payload, headers)
     res = conn.getresponse()
     data = res.read()
-    out = json.loads(data.decode("utf-8")) # @slivmenss
+    out = json.loads(data.decode("utf-8")) # @tikvidload_bot
     output = json.dumps(json.loads(data.decode("utf-8")), indent=4, sort_keys=True)
     return out['data']['videoId']
 def getStatus(url, cookie):
@@ -54,7 +54,7 @@ def getStatus(url, cookie):
     headers = {
         'Cookie': cookies[0] + '=' + cookies[1] + ';',
         'content-type': 'application/x-www-form-urlencoded'
-    } # @slivmenss
+    } # @tikvidload_bot
     conn.request("POST", "/?hl=en", payload, headers)
     res = conn.getresponse()
     data = res.read()
